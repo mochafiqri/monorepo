@@ -7,7 +7,7 @@ COPY . /app
 
 # Set the working directory and build the binary
 WORKDIR /app/cmd
-RUN go build -o main .
+RUN go build -o jds_fetch .
 
 # Set the entrypoint to the binary
-CMD ["/app/main"]
+CMD ["/app/jds_fetch"]
