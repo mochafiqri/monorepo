@@ -29,7 +29,7 @@ deploy-fetch:
     - apt update -y
     - apt install -y sshpass
     - export SSHPASS=$ssh_password
-    - sshpass -e ssh -o stricthostkeychecking=no -p $ssh_port $ssh_user "docker pull $img"
+    - sshpass -e ssh -o stricthostkeychecking=no -p $ssh_port $ssh_user "docker pull $imgFetch"
     - sshpass -e ssh -o stricthostkeychecking=no -p $ssh_port $ssh_user "docker.compose  -f $ssh_path_api up -d jds_fetch"
   only:
     - deploy_fetch
@@ -43,8 +43,8 @@ build-auth:
     #    - docker login -u "$registry_username" -p "$registry_password" $registry
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - docker build -t $imgFetch .
-    - docker push $imgFetch
+    - docker build -t $imgAuth .
+    - docker push $imgAuth
   only:
     - deploy_auth
 
@@ -55,7 +55,7 @@ deploy-auth:
     - apt update -y
     - apt install -y sshpass
     - export SSHPASS=$ssh_password
-    - sshpass -e ssh -o stricthostkeychecking=no -p $ssh_port $ssh_user "docker pull $img"
+    - sshpass -e ssh -o stricthostkeychecking=no -p $ssh_port $ssh_user "docker pull $imgAuth"
     - sshpass -e ssh -o stricthostkeychecking=no -p $ssh_port $ssh_user "docker.compose  -f $ssh_path_api up -d jds_auth"
   only:
     - deploy_auth
