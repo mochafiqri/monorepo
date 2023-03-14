@@ -1,13 +1,12 @@
-# Use golang as the builder image
-FROM golang:latest as builder
+FROM golang AS builder
+RUN mkdir /jds-fetch
+WORKDIR /jds-fetch
+COPY . .
+RUN go build -o jds_fetch
 
-# Create the app directory and copy the source files
-RUN mkdir /app
-COPY . /app
-
-# Set the working directory and build the binary
-WORKDIR /app/cmd
-RUN go build -o jds_fetch .
-
-# Set the entrypoint to the binary
-CMD ["/app/jds_fetch"]
+FROM debian:buster-slim
+RUN apt-get update && apt-get install -y  ca-certificates
+RUN ln -sf /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
+RUN mkdir /jds_fetch
+WORKDIR /jds_fetch
+ENTRYPOINT ./jds_fetch
