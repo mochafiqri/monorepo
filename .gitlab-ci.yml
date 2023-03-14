@@ -43,8 +43,10 @@ build-auth:
     #    - docker login -u "$registry_username" -p "$registry_password" $registry
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
+    - cd "$CI_PROJECT_DIR/auth"
     - docker build -t $imgAuth .
-    - docker push $imgAuth
+    - docker push $imgFetch
+    - cd "$CI_PROJECT_DIR"
   only:
     - deploy_auth
 
