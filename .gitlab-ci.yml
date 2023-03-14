@@ -19,12 +19,12 @@ build-fetch:
     - cd "$CI_PROJECT_DIR/fetch"
     - docker build -t $imgFetch .
     - docker push $imgFetch
+    - cd "$CI_PROJECT_DIR"
   only:
     - deploy_fetch
 
 deploy-fetch:
   stage: deploy
-  image: docker:19.03.5
   script:
     - apt update -y
     - apt install -y sshpass
