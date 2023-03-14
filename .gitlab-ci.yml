@@ -45,7 +45,7 @@ build-auth:
   script:
     - cd "$CI_PROJECT_DIR/auth"
     - docker build -t $imgAuth .
-    - docker push $imgFetch
+    - docker push $imgAuth
     - cd "$CI_PROJECT_DIR"
   only:
     - deploy_auth
