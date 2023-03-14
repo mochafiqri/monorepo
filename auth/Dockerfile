@@ -1,17 +1,14 @@
 #
 FROM python:3.9
 
-#
+RUN mkdir /code
+
 WORKDIR /code
 
-#
-COPY ./requirements.txt /code/requirements.txt
+COPY requirements.txt .
 
-#
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN pip install -r requirements.txt
 
+COPY . .
 #
-COPY ./auth /code/auth
-
-#
-CMD ["uvicorn", "auth.main:auth", "--host", "0.0.0.0", "--port", "8881"]
+CMD ["uvicorn", "auth:app ", "--host", "0.0.0.0", "--port", "8881"]
