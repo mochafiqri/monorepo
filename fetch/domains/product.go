@@ -1,6 +1,7 @@
 package domains
 
 import (
+	"github.com/mochafiqri/monorepo/fetch/commons/constants"
 	"github.com/mochafiqri/monorepo/fetch/commons/dtos"
 	"github.com/mochafiqri/monorepo/fetch/commons/entities"
 	"github.com/mochafiqri/monorepo/fetch/commons/interfaces"
@@ -46,6 +47,12 @@ func (d ProductDomain) GetProduct() dtos.StandardResponseReq {
 	}
 
 	wg.Wait()
+
+	if len(product) == 0 {
+		return dtos.StandardResponseReq{Code: http.StatusNotFound, Message: constants.MsgDataNotFound}
+
+	}
+
 	productResp = helperProductToProductList(product, idr)
 
 	var meta = map[string]interface{}{
