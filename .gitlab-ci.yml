@@ -52,7 +52,6 @@ build-auth:
 
 deploy-auth:
   stage: deploy
-  image: docker:19.03.5
   script:
     - apt update -y
     - apt install -y sshpass
