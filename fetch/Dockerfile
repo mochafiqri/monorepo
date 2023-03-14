@@ -2,6 +2,7 @@ FROM golang AS builder
 RUN mkdir /fetch
 WORKDIR /fetch
 COPY . .
+WORKDIR /fetch/cmd
 RUN go build -o fetch
 
 FROM debian:buster-slim
