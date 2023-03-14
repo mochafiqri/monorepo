@@ -1,0 +1,120 @@
+definitions:
+  dtos.ProductList:
+    properties:
+      createdAt:
+        type: string
+      department:
+        type: string
+      id:
+        type: string
+      price:
+        type: string
+      price_idr:
+        type: string
+      product:
+        type: string
+    type: object
+  dtos.StandardResponse:
+    properties:
+      code:
+        type: integer
+      data: {}
+      error: {}
+      message:
+        type: string
+      meta: {}
+      status:
+        type: string
+    type: object
+info:
+  contact:
+    email: mocha.fiqri@gmail.com
+    name: Mochamad Fiqri
+    url: https://github.com/mochafiqri
+  description: This is a featch server for JDS Technical.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Fetch App
+  version: "1.0"
+paths:
+  /api/v1/products:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: With the Bearer started
+        in: header
+        name: authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dtos.StandardResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/dtos.ProductList'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dtos.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dtos.StandardResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dtos.StandardResponse'
+      summary: Get Product From Mock Api
+      tags:
+      - Product
+  /api/v1/products/recommended:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: With the Bearer started
+        in: header
+        name: authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dtos.StandardResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/dtos.ProductList'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dtos.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dtos.StandardResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dtos.StandardResponse'
+      summary: Get Product Recommend (Highest-Lowest) by Price
+      tags:
+      - Product
+swagger: "2.0"
