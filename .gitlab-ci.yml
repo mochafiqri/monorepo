@@ -16,7 +16,7 @@ build-fetch:
     #    - docker login -u "$registry_username" -p "$registry_password" $registry
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - cd "$CI_PROJECT_DIR/fetch
+    - cd "$CI_PROJECT_DIR/fetch"
     - docker build -t $imgFetch .
     - docker push $imgFetch
   only:
