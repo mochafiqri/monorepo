@@ -24,6 +24,18 @@ def read_root():
 
 @app.post("/register")
 async def register_controller(register : Register):
+    if register.nik == "":
+        raise HTTPException(
+                status_code=403,
+                detail="Nik are required",
+            )
+
+    if register.role == "":
+            raise HTTPException(
+                    status_code=403,
+                    detail="Nik are required",
+                )
+
     if register.nik in users:
         raise HTTPException(
             status_code=403,
