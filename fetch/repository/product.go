@@ -3,9 +3,9 @@ package repository
 import (
 	"encoding/json"
 	"errors"
-	"fetch/commons/entities"
-	"fetch/commons/interfaces"
-	"fetch/commons/utils"
+	"github.com/mochafiqri/monorepo/fetch/commons/entities"
+	"github.com/mochafiqri/monorepo/fetch/commons/interfaces"
+	"github.com/mochafiqri/monorepo/fetch/commons/utils"
 )
 
 var urlProduct = "https://60c18de74f7e880017dbfd51.mockapi.io/api/v1/jabar-digital-services/product"

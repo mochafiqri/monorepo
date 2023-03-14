@@ -3,9 +3,10 @@ package repository
 import (
 	"encoding/json"
 	"errors"
-	"fetch/commons/constants"
-	"fetch/commons/interfaces"
-	"fetch/commons/utils"
+	"github.com/mochafiqri/monorepo/fetch/commons/constants"
+	"github.com/mochafiqri/monorepo/fetch/commons/interfaces"
+	"github.com/mochafiqri/monorepo/fetch/commons/utils"
+
 	"net/url"
 )
 

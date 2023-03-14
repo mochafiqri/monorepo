@@ -1,9 +1,9 @@
 package domains
 
 import (
-	"fetch/commons/dtos"
-	"fetch/commons/entities"
-	"fetch/commons/interfaces"
+	"github.com/mochafiqri/monorepo/fetch/commons/dtos"
+	"github.com/mochafiqri/monorepo/fetch/commons/entities"
+	"github.com/mochafiqri/monorepo/fetch/commons/interfaces"
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"sort"

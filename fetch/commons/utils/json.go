@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"fetch/commons/dtos"
 	"github.com/labstack/echo/v4"
+	"github.com/mochafiqri/monorepo/fetch/commons/dtos"
 	"net/http"
 )
 

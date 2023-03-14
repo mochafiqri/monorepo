@@ -3,10 +3,10 @@ package middleware
 import (
 	"encoding/json"
 	"errors"
-	"fetch/commons/dtos"
 	"fmt"
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
+	"github.com/mochafiqri/monorepo/fetch/commons/dtos"
 	"net/http"
 	"strings"
 	"time"

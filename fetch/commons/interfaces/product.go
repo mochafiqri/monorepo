@@ -1,8 +1,8 @@
 package interfaces
 
 import (
-	"fetch/commons/dtos"
-	"fetch/commons/entities"
+	"github.com/mochafiqri/monorepo/fetch/commons/dtos"
+	"github.com/mochafiqri/monorepo/fetch/commons/entities"
 )
 
 type ProductRepo interface {

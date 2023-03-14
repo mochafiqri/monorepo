@@ -1,0 +1,16 @@
+version: '3'
+services:
+  jds_fetch:
+    image: registry.gitlab.com/mochafiqri/monorepo:fetch
+    restart: always
+    container_name: jds_fetch
+    ports:
+      - 8888:8888
+  jds_auth:
+    image: registry.gitlab.com/mochafiqri/monorepo:auth
+    container_name: jds_auth
+    restart: always
+    ports:
+      - 8881:8881
+
+

@@ -3,17 +3,11 @@ stages:
   - deploy
 
 variables:
-  #  img: $registry/$registry_name/$CI_PROJECT_NAME:prod-$CI_COMMIT_SHORT_SHA
-  #  img_latest: $registry/$registry_name/$CI_PROJECT_NAME:latest
-  #  img_stg: $registry/$registry_name/$CI_PROJECT_NAME:stg-$CI_COMMIT_SHORT_SHA
-  #  img_latest_stg: $registry/$registry_name/$CI_PROJECT_NAME:stg
+  imgFetch: $CI_REGISTRY_IMAGE:fetch
+  imgAuth: $CI_REGISTRY_IMAGE:auth
 
-  img: $CI_REGISTRY_IMAGE:prod-$CI_COMMIT_SHORT_SHA
-  img_latest: $CI_REGISTRY_IMAGE:latest
-  img_stg: $CI_REGISTRY_IMAGE:stg-$CI_COMMIT_SHORT_SHA
-  img_latest_stg: $CI_REGISTRY_IMAGE:stg
 
-build-master:
+build-fetch:
   image: docker:19.03.5
   stage: build
   services:
@@ -21,24 +15,25 @@ build-master:
   before_script:
     #    - docker login -u "$registry_username" -p "$registry_password" $registry
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-    - mv production.env .env
   script:
-    - docker build -t $img .
-    - docker push $img
-    - docker tag $img $img_latest
-    - docker push $img_latest
+    - docker build -t $imgFetch .
+    - docker push $imgFetch
   only:
-    - deploy
+    - deploy_fetch
 
-deploy-master:
+deploy-fetch:
   stage: deploy
-  image: tss182/kubectl:latest
+  image: docker:19.03.5
   script:
-    - kubectl --kubeconfig="$kubeconfig" set image -n app-prod deployment/api app=$img
+    - apt update -y
+    - apt install -y sshpass
+    - export SSHPASS=$ssh_password
+    - sshpass -e ssh -o stricthostkeychecking=no -p $ssh_port $ssh_user "docker pull $img"
+    - sshpass -e ssh -o stricthostkeychecking=no -p $ssh_port $ssh_user "docker.compose  -f $ssh_path_api up -d jds_fetch"
   only:
-    - deploy
+    - deploy_fetch
 
-build-stg:
+build-auth:
   image: docker:19.03.5
   stage: build
   services:
@@ -46,19 +41,20 @@ build-stg:
   before_script:
     #    - docker login -u "$registry_username" -p "$registry_password" $registry
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-    - mv staging.env .env
   script:
-    - docker build -t $img_stg .
-    - docker push $img_stg
-    - docker tag $img_stg $img_latest_stg
-    - docker push $img_latest_stg
+    - docker build -t $imgFetch .
+    - docker push $imgFetch
   only:
-    - staging
+    - deploy_auth
 
-deploy-stg:
+deploy-auth:
   stage: deploy
-  image: tss182/kubectl:latest
+  image: docker:19.03.5
   script:
-    - kubectl --kubeconfig="$kubeconfig" set image -n app-stg deployment/api app=$img_stg
+    - apt update -y
+    - apt install -y sshpass
+    - export SSHPASS=$ssh_password
+    - sshpass -e ssh -o stricthostkeychecking=no -p $ssh_port $ssh_user "docker pull $img"
+    - sshpass -e ssh -o stricthostkeychecking=no -p $ssh_port $ssh_user "docker.compose  -f $ssh_path_api up -d jds_auth"
   only:
-    - staging
+    - deploy_auth

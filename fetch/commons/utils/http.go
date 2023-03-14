@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"fetch/commons/constants"
+	"github.com/mochafiqri/monorepo/fetch/commons/constants"
 	"io"
 	"net"
 	"net/http"
