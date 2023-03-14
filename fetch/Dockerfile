@@ -2,6 +2,7 @@ FROM golang AS builder
 RUN mkdir /jds-fetch
 WORKDIR /jds-fetch
 COPY . .
+WORKDIR /jds-fetch/cmd
 RUN go build -o jds_fetch
 
 FROM debian:buster-slim
