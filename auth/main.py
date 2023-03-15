@@ -35,6 +35,11 @@ async def register_controller(register : Register):
                     status_code=403,
                     detail="Nik are required",
                 )
+    if len(register.nik) != 16:
+        raise HTTPException(
+            status_code=403,
+            detail="Nik must 16 characters",
+                        )
 
     if register.nik in users:
         raise HTTPException(
@@ -53,7 +58,7 @@ async def register_controller(register : Register):
     user = User(**tmp)
     users[register.nik] = user
 
-    return {"message": "NIK Success Registered","data" : {"nik":register.nik,"role":register.nik,"password":password_tmp} }
+    return {"message": "NIK Success Registered","data" : {"nik":register.nik,"role":register.role,"password":password_tmp} }
 
 @app.post("/login")
 async def login_controller(login : LoginReq):
@@ -75,7 +80,7 @@ async def login_controller(login : LoginReq):
     token = jwt_encode(token_data)
     return {"message": "success auth","data" : {"token" : token} }
 
-@app.post("/auth")
+@app.get("/auth")
 async def auth_controller(sec: HTTPAuthorizationCredentials = Depends(security)):
     token = sec.credentials
     token_data = jwt_decode(token)
